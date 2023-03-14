@@ -9,7 +9,10 @@
         public int PlaylistId { get; set; }
         public DateTime TimeAdded { get; set; }
 
-        public PlaylistSong() { }
+        public PlaylistSong() 
+        { 
+            TimeAdded = DateTime.Now;
+        }
 
         public PlaylistSong(Playlist playlist, Song song)
         {
