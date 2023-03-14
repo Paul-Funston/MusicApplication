@@ -163,6 +163,25 @@ namespace MusicApplication.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> RemoveSong(int? psId, int? playlistId, int? songId )
+        {
+            if (_context.PlaylistSongs == null)
+            {
+                return Problem("Entity set 'MusicApplicationContext.Playlists'  is null.");
+            }
+
+            PlaylistSong? playlistSong = await _context.PlaylistSongs.FindAsync(psId);
+
+            if(playlistSong != null && playlistSong.PlaylistId == playlistId && playlistSong.SongId == songId)
+            {
+                _context.PlaylistSongs.Remove(playlistSong);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new {id= playlistId});
+
+
+        }
         private bool PlaylistExists(int id)
         {
             return _context.Playlists.Any(e => e.Id == id);

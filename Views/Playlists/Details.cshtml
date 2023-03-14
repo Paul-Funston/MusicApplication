@@ -38,13 +38,13 @@
     <tbody>
 @foreach (PlaylistSong item in Model.PlaylistSongs) {
             
-            <tr>
+        <tr class="justify-content-center">
             <td>
                 @ViewBag.Counter
             </td>
             <td>
-                <p>@item.Song.Title</p>
-                <p>@item.Song.GetAllArtists()</p>
+                <p class="fw-bold">@item.Song.Title</p>
+                <p class="text-opacity-50">@item.Song.GetAllArtists()</p>
             </td>
             <td>
                 @item.Song.Album.Title
@@ -56,7 +56,7 @@
                 @item.Song.DurationSeconds s
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Remove</a>
+                <a asp-action="RemoveSong" asp-route-psId="@item.Id" asp-route-playlistId="@item.Playlist.Id" asp-route-songId="@item.Song.Id">Remove</a>
             </td>
         </tr>
 
@@ -67,6 +67,9 @@
 
 
 <div>
-    <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a> |
+    <a asp-controller="Songs" asp-action="Index">All Songs</a>
 </div>

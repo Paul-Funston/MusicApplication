@@ -1,13 +1,20 @@
-﻿@model MusicApplication.Models.Song
+﻿@model MusicApplication.Models.ViewModel.AddToPlaylistVM
 
 @{
     ViewData["Title"] = "View";
 }
 
-<h1>Coming Soon</h1>
-
+<h1>Add @Model.SongTitle to Playlist</h1>
+<p>@Model.ViewMessage</p>
 
 <hr />
+
+<form method="post" asp-action="AddToPlaylist">
+    <select asp-for="PlaylistId" asp-items="@Model.Playlists"></select>
+    <input type="hidden" asp-for="SongId" value="@Model.SongId" />
+    <input type="hidden" asp-for="SongTitle" value="@Model.SongTitle" />
+    <button type="submit">Add</button>
+</form>
 
 
 <div>
