@@ -38,24 +38,13 @@ namespace MusicApplication.Controllers
             return View(await musicApplicationContext.ToListAsync());
         }
 
-        // GET: Songs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult AddToPlaylist(int id)
         {
-            if (id == null || _context.Songs == null)
-            {
-                return NotFound();
-            }
 
-            var song = await _context.Songs
-                .Include(s => s.Album)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (song == null)
-            {
-                return NotFound();
-            }
-
-            return View(song);
+            return View();
         }
+
+        
 
     }
 }
