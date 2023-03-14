@@ -33,13 +33,23 @@ namespace MusicApplication.Controllers
                 return NotFound();
             }
 
-            var playlist = await _context.Playlists
+            Playlist? playlist = await _context.Playlists
+                .Include(p => p.PlaylistSongs).ThenInclude(ps => ps.Song)
+                .ThenInclude(s => s.Album)
+                .Include(p => p.PlaylistSongs).ThenInclude(ps => ps.Song)
+                .ThenInclude(s => s.SongContributers)
+                .ThenInclude(sc => sc.Artist)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (playlist == null)
             {
                 return NotFound();
             }
 
+            ViewBag.SongCount = playlist.PlaylistSongs.Count;
+            ViewBag.Duration = playlist.PlaylistSongs.Sum(ps => ps.Song.DurationSeconds);
+            ViewBag.Counter = 1;
             return View(playlist);
         }
 
