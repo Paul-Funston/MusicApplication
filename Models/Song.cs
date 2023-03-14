@@ -10,6 +10,13 @@
         public virtual HashSet<SongContributer> SongContributers { get; set; } = new();
         public virtual HashSet<PlaylistSong> PlaylistSongs { get; set; } = new();
 
+        public string GetAllArtists()
+        {
+           List<string> artists = SongContributers.Select(sc => sc.Artist.Name).ToList();
+
+            return string.Join(", ", artists);
+        }
+
         public Song() { }
 
         public Song(string title, int durationSeconds, Album album)

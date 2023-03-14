@@ -8,6 +8,7 @@
         public virtual Song Song { get; set; }
         public int SongId { get; set;}
 
+        
         public SongContributer() { }
 
         public SongContributer(Song song, Artist artist)
