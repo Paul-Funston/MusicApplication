@@ -14,6 +14,18 @@ namespace MusicApplication.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Song>()
+                .ToTable(s => s.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0"))
+                .ToTable(s => s.HasCheckConstraint("CK_TrackNumber", "[TrackNumber]> 0"));
+
+            modelBuilder.Entity<Song>()
+                .HasIndex(s => new { s.AlbumId, s.TrackNumber })
+                .IsUnique();
+
+
+        }
         public DbSet<MusicApplication.Models.Song> Songs { get; set; } = default!;
         public DbSet<MusicApplication.Models.Album> Albums { get; set; } = default!;
         public DbSet<MusicApplication.Models.Artist> Artists{ get; set; } = default!;

@@ -11,7 +11,7 @@ namespace MusicApplication.Data
         {
             MusicApplicationContext context = new MusicApplicationContext(serviceProvider.GetRequiredService<DbContextOptions<MusicApplicationContext>>());
 
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.Migrate();
 
             Artist artistOne = new Artist("Riell");

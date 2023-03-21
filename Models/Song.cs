@@ -1,12 +1,19 @@
-﻿namespace MusicApplication.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicApplication.Models
 {
     public class Song
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        [Display(Name ="Duration")]
+        
+        
         public int DurationSeconds { get; set; }
         public virtual Album Album { get; set;}
+        
         public int AlbumId { get; set; }
+        public int TrackNumber { get; set; }
         public virtual HashSet<SongContributer> SongContributers { get; set; } = new();
         public virtual HashSet<PlaylistSong> PlaylistSongs { get; set; } = new();
 
