@@ -1,4 +1,6 @@
-﻿namespace MusicApplication.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicApplication.Models
 {
     public class PlaylistSong
     {
@@ -7,6 +9,8 @@
         public int SongId { get; set; }
         public virtual Playlist Playlist { get; set; }
         public int PlaylistId { get; set; }
+        [Display(Name = "Time Added")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:f}")]
         public DateTime TimeAdded { get; set; }
 
         public PlaylistSong() 

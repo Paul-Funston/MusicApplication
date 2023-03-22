@@ -1,8 +1,11 @@
-﻿namespace MusicApplication.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MusicApplication.Models
 {
     public abstract class MediaCollection
     {
         public int Id { get; set; }
+        
         public string Title { get; set; }
         public MediaCollection() { }
 

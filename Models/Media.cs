@@ -7,7 +7,15 @@ namespace MusicApplication.Models
         public int Id { get; set; }
         public string Title { get; set; }
         [Display(Name = "Duration")]
+        
         public int DurationSeconds { get; set; }
+
+        public string ReadableDuration()
+        {
+            TimeSpan ts = TimeSpan.FromSeconds(DurationSeconds);
+
+            return ts.ToString("c");
+        }
         public int MediaCollectionId { get; set; }
 
         [Display(Name = "#")]

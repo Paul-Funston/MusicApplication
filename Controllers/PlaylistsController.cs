@@ -48,7 +48,9 @@ namespace MusicApplication.Controllers
             }
 
             ViewBag.SongCount = playlist.PlaylistSongs.Count;
-            ViewBag.Duration = playlist.PlaylistSongs.Sum(ps => ps.Song.DurationSeconds);
+            int playlistDurationInSeconds = playlist.PlaylistSongs.Sum(ps => ps.Song.DurationSeconds);
+            TimeSpan ts = TimeSpan.FromSeconds(playlistDurationInSeconds);
+            ViewBag.Duration = ts.ToString("c");
             ViewBag.Counter = 1;
             return View(playlist);
         }
