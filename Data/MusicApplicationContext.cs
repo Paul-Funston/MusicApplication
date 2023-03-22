@@ -44,6 +44,7 @@ namespace MusicApplication.Data
                 .WithOne(e => e.Podcast)
                 .HasForeignKey(e => e.MediaCollectionId);
 
+
             
         }
 
@@ -66,6 +67,6 @@ namespace MusicApplication.Data
         public DbSet<MusicApplication.Models.Artist> Artists{ get; set; } = default!;
         public DbSet<MusicApplication.Models.Playlist> Playlists{ get; set; } = default!;
         public DbSet<MusicApplication.Models.PlaylistSong> PlaylistSongs { get; set; } = default!;
-        public DbSet<MusicApplication.Models.SongContributer> SongContributers { get; set; } = default!;
+        public DbSet<MusicApplication.Models.MediaContributer> MediaContributers { get; set; } = default!;
     }
 }

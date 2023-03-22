@@ -37,7 +37,7 @@ namespace MusicApplication.Controllers
                 .Include(p => p.PlaylistSongs).ThenInclude(ps => ps.Song)
                 .ThenInclude(s => s.Album)
                 .Include(p => p.PlaylistSongs).ThenInclude(ps => ps.Song)
-                .ThenInclude(s => s.SongContributers)
+                .ThenInclude(s => s.MediaContributers)
                 .ThenInclude(sc => sc.Artist)
                 .FirstOrDefaultAsync(m => m.Id == id);
 

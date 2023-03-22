@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual HashSet<SongContributer> SongContributers { get; set; } = new();
+        public virtual HashSet<MediaContributer> SongContributers { get; set; } = new();
 
         public Artist() { }
 

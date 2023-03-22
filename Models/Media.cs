@@ -21,6 +21,14 @@ namespace MusicApplication.Models
         [Display(Name = "#")]
         public int CollectionOrderNumber { get; set; }
 
+        public virtual HashSet<MediaContributer> MediaContributers { get; set; } = new();
+        public virtual string GetAllArtists()
+        {
+            List<string> artists = MediaContributers.Select(sc => sc.Artist.Name).ToList();
+
+            return string.Join(", ", artists);
+        }
+
         public Media() { }
 
         public Media(string title, int durationSeconds, int mediaCollectionId, int orderNumber)
@@ -41,15 +49,10 @@ namespace MusicApplication.Models
         
         
         
-        public virtual HashSet<SongContributer> SongContributers { get; set; } = new();
+        
         public virtual HashSet<PlaylistSong> PlaylistSongs { get; set; } = new();
 
-        public string GetAllArtists()
-        {
-           List<string> artists = SongContributers.Select(sc => sc.Artist.Name).ToList();
-
-            return string.Join(", ", artists);
-        }
+        
 
         public Song() : base() { }
 

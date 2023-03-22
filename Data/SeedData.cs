@@ -79,13 +79,9 @@ namespace MusicApplication.Data
             if (!context.Songs.Any())
             {
                 context.Songs.Add(songOne);
-                await context.SaveChangesAsync();
                 context.Songs.Add(songTwo);
-                await context.SaveChangesAsync();
                 context.Songs.Add(songThree);
-                await context.SaveChangesAsync();
                 context.Songs.Add(songFour);
-                await context.SaveChangesAsync();
                 context.Songs.Add(songFive);
                 context.Songs.Add(songSix);
                 context.Songs.Add(songSeven);
@@ -107,53 +103,53 @@ namespace MusicApplication.Data
 
             await context.SaveChangesAsync();
 
-            SongContributer songContributerOne = new SongContributer(songOne, artistOne);
-            SongContributer songContributerTwo = new SongContributer(songTwo, artistOne);
-            SongContributer songContributerThree = new SongContributer(songThree, artistOne);
-            SongContributer songContributerFour = new SongContributer(songFour, artistOne);
-            SongContributer songContributerFive = new SongContributer(songFive, artistOne);
-            SongContributer songContributerSix = new SongContributer(songSix, artistOne);
-            SongContributer songContributerSeven = new SongContributer(songNineteen, artistOne);
-            SongContributer songContributerEight = new SongContributer(songTwenty, artistOne);
-            SongContributer songContributerNine = new SongContributer(songSeven, artistTwo);
-            SongContributer songContributerTen = new SongContributer(songEight, artistTwo);
-            SongContributer songContributerEleven = new SongContributer(songNine, artistTwo);
-            SongContributer songContributerTwelve = new SongContributer(songTen, artistTwo);
-            SongContributer songContributerThirteen = new SongContributer(songEleven, artistTwo);
-            SongContributer songContributerFourteen = new SongContributer(songTwelve, artistTwo);
-            SongContributer songContributerFifteen = new SongContributer(songThirteen, artistTwo);
-            SongContributer songContributerSixteen = new SongContributer(songFourteen, artistTwo);
-            SongContributer songContributerSeventeen = new SongContributer(songFifteen, artistTwo);
-            SongContributer songContributerEighteen = new SongContributer(songSixteen, artistThree);
-            SongContributer songContributerNineteen = new SongContributer(songSeventeen, artistThree);
-            SongContributer songContributerTwenty = new SongContributer(songEighteen, artistThree);
-            SongContributer songContributerTwentyOne = new SongContributer(songNineteen, artistThree);
-            SongContributer songContributerTwentyTwo = new SongContributer(songTwenty, artistThree);
+            MediaContributer songContributerOne = new MediaContributer(songOne, artistOne);
+            MediaContributer songContributerTwo = new MediaContributer(songTwo, artistOne);
+            MediaContributer songContributerThree = new MediaContributer(songThree, artistOne);
+            MediaContributer songContributerFour = new MediaContributer(songFour, artistOne);
+            MediaContributer songContributerFive = new MediaContributer(songFive, artistOne);
+            MediaContributer songContributerSix = new MediaContributer(songSix, artistOne);
+            MediaContributer songContributerSeven = new MediaContributer(songNineteen, artistOne);
+            MediaContributer songContributerEight = new MediaContributer(songTwenty, artistOne);
+            MediaContributer songContributerNine = new MediaContributer(songSeven, artistTwo);
+            MediaContributer songContributerTen = new MediaContributer(songEight, artistTwo);
+            MediaContributer songContributerEleven = new MediaContributer(songNine, artistTwo);
+            MediaContributer songContributerTwelve = new MediaContributer(songTen, artistTwo);
+            MediaContributer songContributerThirteen = new MediaContributer(songEleven, artistTwo);
+            MediaContributer songContributerFourteen = new MediaContributer(songTwelve, artistTwo);
+            MediaContributer songContributerFifteen = new MediaContributer(songThirteen, artistTwo);
+            MediaContributer songContributerSixteen = new MediaContributer(songFourteen, artistTwo);
+            MediaContributer songContributerSeventeen = new MediaContributer(songFifteen, artistTwo);
+            MediaContributer songContributerEighteen = new MediaContributer(songSixteen, artistThree);
+            MediaContributer songContributerNineteen = new MediaContributer(songSeventeen, artistThree);
+            MediaContributer songContributerTwenty = new MediaContributer(songEighteen, artistThree);
+            MediaContributer songContributerTwentyOne = new MediaContributer(songNineteen, artistThree);
+            MediaContributer songContributerTwentyTwo = new MediaContributer(songTwenty, artistThree);
 
-            if (!context.SongContributers.Any())
+            if (!context.MediaContributers.Any())
             {
-                context.SongContributers.Add(songContributerOne);
-                context.SongContributers.Add(songContributerTwo);
-                context.SongContributers.Add(songContributerThree);
-                context.SongContributers.Add(songContributerFour);
-                context.SongContributers.Add(songContributerFive);
-                context.SongContributers.Add(songContributerSix);
-                context.SongContributers.Add(songContributerSeven);
-                context.SongContributers.Add(songContributerEight);
-                context.SongContributers.Add(songContributerNine);
-                context.SongContributers.Add(songContributerTen);
-                context.SongContributers.Add(songContributerEleven);
-                context.SongContributers.Add(songContributerTwelve);
-                context.SongContributers.Add(songContributerThirteen);
-                context.SongContributers.Add(songContributerFourteen);
-                context.SongContributers.Add(songContributerFifteen);
-                context.SongContributers.Add(songContributerSixteen);
-                context.SongContributers.Add(songContributerSeventeen);
-                context.SongContributers.Add(songContributerEighteen);
-                context.SongContributers.Add(songContributerNineteen);
-                context.SongContributers.Add(songContributerTwenty);
-                context.SongContributers.Add(songContributerTwentyOne);
-                context.SongContributers.Add(songContributerTwentyTwo);
+                context.MediaContributers.Add(songContributerOne);
+                context.MediaContributers.Add(songContributerTwo);
+                context.MediaContributers.Add(songContributerThree);
+                context.MediaContributers.Add(songContributerFour);
+                context.MediaContributers.Add(songContributerFive);
+                context.MediaContributers.Add(songContributerSix);
+                context.MediaContributers.Add(songContributerSeven);
+                context.MediaContributers.Add(songContributerEight);
+                context.MediaContributers.Add(songContributerNine);
+                context.MediaContributers.Add(songContributerTen);
+                context.MediaContributers.Add(songContributerEleven);
+                context.MediaContributers.Add(songContributerTwelve);
+                context.MediaContributers.Add(songContributerThirteen);
+                context.MediaContributers.Add(songContributerFourteen);
+                context.MediaContributers.Add(songContributerFifteen);
+                context.MediaContributers.Add(songContributerSixteen);
+                context.MediaContributers.Add(songContributerSeventeen);
+                context.MediaContributers.Add(songContributerEighteen);
+                context.MediaContributers.Add(songContributerNineteen);
+                context.MediaContributers.Add(songContributerTwenty);
+                context.MediaContributers.Add(songContributerTwentyOne);
+                context.MediaContributers.Add(songContributerTwentyTwo);
             }
 
             PlaylistSong playlistSongOne = new PlaylistSong(playlistOne, songTwenty);

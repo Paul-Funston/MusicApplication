@@ -27,6 +27,7 @@ namespace MusicApplication.Models
     public class Podcast : MediaCollection
     {
         public virtual HashSet<Episode> Episodes { get; set; } = new HashSet<Episode> ();
+        public virtual HashSet<PodcastContributer> Cast { get; set; } = new HashSet<PodcastContributer>();
 
         public Podcast() : base() { }
         public Podcast(string title) : base(title) { }
