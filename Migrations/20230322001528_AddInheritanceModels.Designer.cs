@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicApplication.Data;
 
@@ -11,9 +12,11 @@ using MusicApplication.Data;
 namespace MusicApplication.Migrations
 {
     [DbContext(typeof(MusicApplicationContext))]
-    partial class MusicApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230322001528_AddInheritanceModels")]
+    partial class AddInheritanceModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,9 +74,9 @@ namespace MusicApplication.Migrations
 
                     b.ToTable("Media", t =>
                         {
-                            t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
-
                             t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
+
+                            t.HasCheckConstraint("CK_TrackNumber", "[CollectionOrderNumber]> 0");
                         });
 
                     b.HasDiscriminator<string>("media_type").HasValue("Media");
@@ -178,9 +181,9 @@ namespace MusicApplication.Migrations
 
                     b.ToTable(t =>
                         {
-                            t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
-
                             t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
+
+                            t.HasCheckConstraint("CK_TrackNumber", "[CollectionOrderNumber]> 0");
                         });
 
                     b.HasDiscriminator().HasValue("media_episode");
@@ -192,9 +195,9 @@ namespace MusicApplication.Migrations
 
                     b.ToTable(t =>
                         {
-                            t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
-
                             t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
+
+                            t.HasCheckConstraint("CK_TrackNumber", "[CollectionOrderNumber]> 0");
                         });
 
                     b.HasDiscriminator().HasValue("media_song");

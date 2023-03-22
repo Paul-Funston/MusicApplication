@@ -11,7 +11,7 @@ namespace MusicApplication.Data
         {
             MusicApplicationContext context = new MusicApplicationContext(serviceProvider.GetRequiredService<DbContextOptions<MusicApplicationContext>>());
 
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.Migrate();
 
             Artist artistOne = new Artist("Riell");
@@ -55,33 +55,37 @@ namespace MusicApplication.Data
 
             await context.SaveChangesAsync();
 
-            Song songOne = new Song("Better Off", 191, albumOne );
-            Song songTwo = new Song("Selfish", 150, albumOne);
-            Song songThree = new Song("All I Know", 188, albumOne);
-            Song songFour = new Song("Paradise", 198, albumTwo);
-            Song songFive = new Song("Somewhere New", 201, albumTwo);
-            Song songSix = new Song("First", 191, albumTwo);
-            Song songSeven = new Song("Dangerous", 158, albumThree);
-            Song songEight = new Song("Something More", 156, albumThree);
-            Song songNine = new Song("Anxiety", 175, albumThree);
-            Song songTen = new Song("Keep You", 154, albumThree);
-            Song songEleven = new Song("Bang!", 141, albumFour);
-            Song songTwelve = new Song("Lighthouse", 142, albumFour);
-            Song songThirteen = new Song("Fall", 172, albumFour);
-            Song songFourteen = new Song("Just Like Me", 163, albumFour);
-            Song songFifteen = new Song("Repeat", 202, albumFour);
-            Song songSixteen = new Song("Carousel", 134, albumFive);
-            Song songSeventeen = new Song("Ghost",187, albumFive);
-            Song songEighteen = new Song("Time", 171, albumFive);
-            Song songNineteen = new Song("Hate You", 200, albumSix);
-            Song songTwenty = new Song("Animal", 172, albumSix);
+            Song songOne = new Song("Better Off", 191, albumOne , 1);
+            Song songTwo = new Song("Selfish", 150, albumOne, 2);
+            Song songThree = new Song("All I Know", 188, albumOne, 3);
+            Song songFour = new Song("Paradise", 198, albumTwo, 1);
+            Song songFive = new Song("Somewhere New", 201, albumTwo, 2);
+            Song songSix = new Song("First", 191, albumTwo, 3);
+            Song songSeven = new Song("Dangerous", 158, albumThree, 1);
+            Song songEight = new Song("Something More", 156, albumThree, 2);
+            Song songNine = new Song("Anxiety", 175, albumThree, 3);
+            Song songTen = new Song("Keep You", 154, albumThree, 4);
+            Song songEleven = new Song("Bang!", 141, albumFour, 1);
+            Song songTwelve = new Song("Lighthouse", 142, albumFour, 2);
+            Song songThirteen = new Song("Fall", 172, albumFour, 3);
+            Song songFourteen = new Song("Just Like Me", 163, albumFour, 4);
+            Song songFifteen = new Song("Repeat", 202, albumFour, 5);
+            Song songSixteen = new Song("Carousel", 134, albumFive, 1);
+            Song songSeventeen = new Song("Ghost",187, albumFive, 2);
+            Song songEighteen = new Song("Time", 171, albumFive, 3);
+            Song songNineteen = new Song("Hate You", 200, albumSix, 1);
+            Song songTwenty = new Song("Animal", 172, albumSix, 2);
 
             if (!context.Songs.Any())
             {
                 context.Songs.Add(songOne);
+                await context.SaveChangesAsync();
                 context.Songs.Add(songTwo);
+                await context.SaveChangesAsync();
                 context.Songs.Add(songThree);
+                await context.SaveChangesAsync();
                 context.Songs.Add(songFour);
+                await context.SaveChangesAsync();
                 context.Songs.Add(songFive);
                 context.Songs.Add(songSix);
                 context.Songs.Add(songSeven);

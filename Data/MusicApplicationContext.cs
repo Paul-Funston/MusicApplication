@@ -16,17 +16,52 @@ namespace MusicApplication.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Song>()
-                .ToTable(s => s.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0"))
-                .ToTable(s => s.HasCheckConstraint("CK_TrackNumber", "[TrackNumber]> 0"));
+            _modelCreateRelationships(modelBuilder);
+            _modelCreateValidation(modelBuilder);
+            
 
-            modelBuilder.Entity<Song>()
-                .HasIndex(s => new { s.AlbumId, s.TrackNumber })
+        }
+
+        private void _modelCreateRelationships(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Media>()
+                .HasDiscriminator<string>("media_type")
+                .HasValue<Song>("media_song")
+                .HasValue<Episode>("media_episode");
+
+            modelBuilder.Entity<MediaCollection>()
+                .HasDiscriminator<string>("collection_type")
+                .HasValue<Album>("collection_album")
+                .HasValue<Podcast>("collection_podcast");
+
+            modelBuilder.Entity<Album>()
+                .HasMany(a => a.Songs)
+                .WithOne(s => s.Album)
+                .HasForeignKey(s => s.MediaCollectionId);
+
+            modelBuilder.Entity<Podcast>()
+                .HasMany(p => p.Episodes)
+                .WithOne(e => e.Podcast)
+                .HasForeignKey(e => e.MediaCollectionId);
+
+            
+        }
+
+
+
+        private void _modelCreateValidation(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Media>()
+                .ToTable(m => m.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0"))
+                .ToTable(m => m.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0"));
+
+            modelBuilder.Entity<Media>()
+                .HasIndex(m => new { m.MediaCollectionId, m.CollectionOrderNumber })
                 .IsUnique();
-
 
         }
         public DbSet<MusicApplication.Models.Song> Songs { get; set; } = default!;
+        public DbSet<Episode> Episodes { get; set; } = default!;
         public DbSet<MusicApplication.Models.Album> Albums { get; set; } = default!;
         public DbSet<MusicApplication.Models.Artist> Artists{ get; set; } = default!;
         public DbSet<MusicApplication.Models.Playlist> Playlists{ get; set; } = default!;
