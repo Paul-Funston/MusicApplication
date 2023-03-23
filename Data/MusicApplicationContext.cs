@@ -16,18 +16,62 @@ namespace MusicApplication.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
+            /*
+            modelBuilder.Entity<Media>(entity =>
+            {
+
+                entity.HasKey(e => e.Id);
+
+                entity.HasDiscriminator<string>("media_type")
+                .HasValue<Song>("media_song")
+                .HasValue<Episode>("media_episode");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsRequired();
+                entity.Property(e => e.DurationSeconds)
+                    .IsRequired();
+                entity.Property(e => e.CollectionOrderNumber)
+                    .IsRequired();
+
+                entity.HasMany(m => m.MediaContributers).WithOne()
+                .HasForeignKey(c => c.MediaId);
+            });
+
+            modelBuilder.Entity<Song>(entity =>
+            {
+                entity.HasOne(s => s.Album).WithMany(a => a.Songs)
+                .HasForeignKey(s => s.MediaCollectionId);
+
+                entity.HasMany(s => s.PlaylistSongs).WithOne()
+                .HasForeignKey(ps => ps.SongId);
+            });
+
+            modelBuilder.Entity<Episode>(entity =>
+            {
+                entity.HasOne(e => e.Podcast).WithMany()
+                .HasForeignKey(e => e.MediaCollectionId);
+            });
+
+            modelBuilder.Entity<MediaCollection>(entity =>
+            {
+                entity.HasDiscriminator<string>("collection_type")
+                .HasValue<Album>("collection_album")
+                .HasValue<Podcast>("collection_podcast");
+            });
+
+            */
             _modelCreateRelationships(modelBuilder);
-            _modelCreateValidation(modelBuilder);
             
+            _modelCreateValidation(modelBuilder);
+
 
         }
 
         private void _modelCreateRelationships(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Media>()
-                .HasDiscriminator<string>("media_type")
-                .HasValue<Song>("media_song")
-                .HasValue<Episode>("media_episode");
+            
 
             modelBuilder.Entity<MediaCollection>()
                 .HasDiscriminator<string>("collection_type")
@@ -44,8 +88,31 @@ namespace MusicApplication.Data
                 .WithOne(e => e.Podcast)
                 .HasForeignKey(e => e.MediaCollectionId);
 
-
             
+
+            modelBuilder.Entity<Media>()
+                .HasDiscriminator<string>("media_type")
+                .HasValue<Song>("media_song")
+                .HasValue<Episode>("media_episode");
+
+            modelBuilder.Entity<Media>()
+                .HasMany(s => s.MediaContributers)
+                .WithOne(mc => mc.Media)
+                .HasForeignKey(mc => mc.MediaId);
+
+            modelBuilder.Entity<Song>()
+                .HasMany(s => s.PlaylistSongs)
+                .WithOne(ps => ps.Song)
+                .HasForeignKey(ps => ps.SongId);
+
+            modelBuilder.Entity<Playlist>()
+                .HasMany(p => p.PlaylistSongs)
+                .WithOne(ps => ps.Playlist)
+                .HasForeignKey(ps => ps.PlaylistId);
+
+
+
+
         }
 
 

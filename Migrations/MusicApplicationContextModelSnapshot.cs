@@ -36,7 +36,7 @@ namespace MusicApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artists");
+                    b.ToTable("Artists", (string)null);
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Media", b =>
@@ -69,7 +69,7 @@ namespace MusicApplication.Migrations
                     b.HasIndex("MediaCollectionId", "CollectionOrderNumber")
                         .IsUnique();
 
-                    b.ToTable("Media", t =>
+                    b.ToTable("Media", null, t =>
                         {
                             t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
 
@@ -99,7 +99,7 @@ namespace MusicApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MediaCollection");
+                    b.ToTable("MediaCollection", (string)null);
 
                     b.HasDiscriminator<string>("collection_type").HasValue("MediaCollection");
 
@@ -126,7 +126,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("MediaId");
 
-                    b.ToTable("MediaContributers");
+                    b.ToTable("MediaContributers", (string)null);
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Playlist", b =>
@@ -143,7 +143,7 @@ namespace MusicApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists");
+                    b.ToTable("Playlists", (string)null);
                 });
 
             modelBuilder.Entity("MusicApplication.Models.PlaylistSong", b =>
@@ -169,7 +169,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("SongId");
 
-                    b.ToTable("PlaylistSongs");
+                    b.ToTable("PlaylistSongs", (string)null);
                 });
 
             modelBuilder.Entity("MusicApplication.Models.PodcastContributer", b =>
@@ -192,7 +192,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("PodcastId");
 
-                    b.ToTable("PodcastContributer");
+                    b.ToTable("PodcastContributer", (string)null);
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Episode", b =>

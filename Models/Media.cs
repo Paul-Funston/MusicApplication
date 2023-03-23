@@ -44,15 +44,7 @@ namespace MusicApplication.Models
     {
         
         public virtual Album Album { get; set;}
-
-        
-        
-        
-        
-        
         public virtual HashSet<PlaylistSong> PlaylistSongs { get; set; } = new();
-
-        
 
         public Song() : base() { }
 
