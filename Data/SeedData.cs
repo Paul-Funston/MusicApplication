@@ -166,7 +166,7 @@ namespace MusicApplication.Data
                 PodcastContributer PodcastContributerFour = new PodcastContributer(podcastFour, artistOne);
                 PodcastContributer PodcastContributerFive = new PodcastContributer(podcastFour, artistThree);
 
-                if(context.PodcastContributers.Any())
+                if(!context.PodcastContributers.Any())
                 {
                     context.PodcastContributers.Add(PodcastContributerOne);
                     context.PodcastContributers.Add(PodcastContributerTwo);
