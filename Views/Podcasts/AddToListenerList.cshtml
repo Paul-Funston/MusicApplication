@@ -1,0 +1,28 @@
+﻿@model MusicApplication.Models.ViewModel.AddToListenerListVM
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Add @Model.PodcastTitle to ListenerList</h1>
+<p>@Model.ViewMessage</p>
+
+<hr />
+
+<form method="post" asp-action="AddToListenerList">
+    <select asp-for="ListenerListId" asp-items="@Model.ListenerLists"></select>
+    <input type="hidden" asp-for="PodcastId" value="@Model.PodcastId" />
+    <input type="hidden" asp-for="PodcastTitle" value="@Model.PodcastTitle" />
+    <button type="submit">Add</button>
+</form>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

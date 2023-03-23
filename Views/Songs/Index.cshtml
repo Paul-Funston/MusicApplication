@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DurationSeconds)
+                @item.ReadableDuration()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Album.Title)

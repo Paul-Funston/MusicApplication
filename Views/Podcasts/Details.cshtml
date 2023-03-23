@@ -1,0 +1,90 @@
+﻿@model MusicApplication.Models.Podcast
+
+@{
+    ViewData["Title"] = "Details";
+  
+}
+@{
+    List<Episode> episodes = new();
+
+    @if(ViewBag.OrderDesc)
+    {
+        episodes = Model.Episodes.OrderByDescending(e => e.CollectionOrderNumber).ToList();
+    } else
+    {
+        episodes = Model.Episodes.OrderBy(e => e.CollectionOrderNumber).ToList();
+    }
+}
+    
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Title)</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cast)
+        </dt>
+        <dd class="col-sm-10">
+        @foreach(var item in Model.Cast)
+        {
+             <span>
+                 @item.Artist.Name 
+             </span>
+        }
+        </dd>
+       
+    </dl>
+</div>
+<form asp-action="Details" asp-route-id="@Model.Id">
+    @if(ViewBag.OrderDesc)
+    {
+        <button asp-route-orderDesc="f" type="submit">Ascending</button>
+    } else
+    {
+        <button asp-route-orderDesc="t" type="submit">Descending</button>
+    }
+</form>
+<hr/>
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Episodes.First().CollectionOrderNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Episodes.First().Title)
+                </th>
+                <th>Guests</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Episodes.First().DurationSeconds)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Episode item in @episodes)
+            {
+                <tr>
+                    <td>
+                        @item.CollectionOrderNumber
+                    </td>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.GetAllArtists()
+                    </td>
+                    <td>
+                        @item.ReadableDuration()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    
+    <a asp-action="Index">Back to List</a>
+</div>

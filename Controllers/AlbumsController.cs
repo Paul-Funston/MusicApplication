@@ -24,14 +24,14 @@ namespace MusicApplication.Controllers
         {
             var context = _context.Albums
                   .Include(a => a.Songs)
-                  .ThenInclude(s => s.SongContributers)
+                  .ThenInclude(s => s.MediaContributers)
                   .ThenInclude(sc => sc.Artist);
                   
 
             if (id != null && id > 0)
             {
                 return View(await context.Where(a =>
-                    a.Songs.Any(s => s.SongContributers.Any
+                    a.Songs.Any(s => s.MediaContributers.Any
                         (sc => sc.ArtistId == id))).ToListAsync());
             }
             

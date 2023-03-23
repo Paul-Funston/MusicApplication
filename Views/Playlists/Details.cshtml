@@ -10,7 +10,7 @@
         <h4>@ViewBag.SongCount songs</h4>
     </div>
     <div class="col">
-        <h4>@ViewBag.Duration seconds</h4>
+        <h4>@ViewBag.Duration</h4>
     </div>
 </div>
 
@@ -50,10 +50,10 @@
                 @item.Song.Album.Title
             </td>
             <td>
-                @item.TimeAdded
+                @Html.DisplayFor(model => model.PlaylistSongs.First(i => i == item).TimeAdded)
             </td>
             <td>
-                @item.Song.DurationSeconds s
+                @item.Song.ReadableDuration()
             </td>
             <td>
                 <a asp-action="RemoveSong" asp-route-psId="@item.Id" asp-route-playlistId="@item.Playlist.Id" asp-route-songId="@item.Song.Id">Remove</a>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicApplication.Data;
 
@@ -11,9 +12,11 @@ using MusicApplication.Data;
 namespace MusicApplication.Migrations
 {
     [DbContext(typeof(MusicApplicationContext))]
-    partial class MusicApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230322031336_UpdateManyToManyModels")]
+    partial class UpdateManyToManyModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,54 +35,11 @@ namespace MusicApplication.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Artists");
-                });
-
-            modelBuilder.Entity("MusicApplication.Models.ListenerList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ListenerLists");
-                });
-
-            modelBuilder.Entity("MusicApplication.Models.ListenerListPodcast", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ListenerListId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PodcastId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PodcastId");
-
-                    b.HasIndex("ListenerListId", "PodcastId")
-                        .IsUnique();
-
-                    b.ToTable("ListenerListPodcasts");
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Media", b =>
@@ -101,8 +61,7 @@ namespace MusicApplication.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("media_type")
                         .IsRequired()
@@ -117,7 +76,7 @@ namespace MusicApplication.Migrations
                         {
                             t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
 
-                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0 AND [DurationSeconds] < 86400");
+                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
                         });
 
                     b.HasDiscriminator<string>("media_type").HasValue("Media");
@@ -135,8 +94,7 @@ namespace MusicApplication.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("collection_type")
                         .IsRequired()
@@ -169,8 +127,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("ArtistId");
 
-                    b.HasIndex("MediaId", "ArtistId")
-                        .IsUnique();
+                    b.HasIndex("MediaId");
 
                     b.ToTable("MediaContributers");
                 });
@@ -185,8 +142,7 @@ namespace MusicApplication.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -214,8 +170,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("PlaylistId");
 
-                    b.HasIndex("SongId", "PlaylistId")
-                        .IsUnique();
+                    b.HasIndex("SongId");
 
                     b.ToTable("PlaylistSongs");
                 });
@@ -236,26 +191,22 @@ namespace MusicApplication.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ArtistId");
+
                     b.HasIndex("PodcastId");
 
-                    b.HasIndex("ArtistId", "PodcastId")
-                        .IsUnique();
-
-                    b.ToTable("PodcastContributers");
+                    b.ToTable("PodcastContributer");
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Episode", b =>
                 {
                     b.HasBaseType("MusicApplication.Models.Media");
 
-                    b.Property<DateTime>("ReleaseDate")
-                        .HasColumnType("datetime2");
-
                     b.ToTable(t =>
                         {
                             t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
 
-                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0 AND [DurationSeconds] < 86400");
+                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
                         });
 
                     b.HasDiscriminator().HasValue("media_episode");
@@ -269,7 +220,7 @@ namespace MusicApplication.Migrations
                         {
                             t.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0");
 
-                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0 AND [DurationSeconds] < 86400");
+                            t.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0");
                         });
 
                     b.HasDiscriminator().HasValue("media_song");
@@ -289,29 +240,10 @@ namespace MusicApplication.Migrations
                     b.HasDiscriminator().HasValue("collection_podcast");
                 });
 
-            modelBuilder.Entity("MusicApplication.Models.ListenerListPodcast", b =>
-                {
-                    b.HasOne("MusicApplication.Models.ListenerList", "ListenerList")
-                        .WithMany("ListenerListPodcasts")
-                        .HasForeignKey("ListenerListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicApplication.Models.Podcast", "Podcast")
-                        .WithMany("ListenerListPodcasts")
-                        .HasForeignKey("PodcastId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ListenerList");
-
-                    b.Navigation("Podcast");
-                });
-
             modelBuilder.Entity("MusicApplication.Models.MediaContributer", b =>
                 {
                     b.HasOne("MusicApplication.Models.Artist", "Artist")
-                        .WithMany("MediaContributers")
+                        .WithMany("SongContributers")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -349,7 +281,7 @@ namespace MusicApplication.Migrations
             modelBuilder.Entity("MusicApplication.Models.PodcastContributer", b =>
                 {
                     b.HasOne("MusicApplication.Models.Artist", "Artist")
-                        .WithMany("PodcastContributers")
+                        .WithMany()
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -389,14 +321,7 @@ namespace MusicApplication.Migrations
 
             modelBuilder.Entity("MusicApplication.Models.Artist", b =>
                 {
-                    b.Navigation("MediaContributers");
-
-                    b.Navigation("PodcastContributers");
-                });
-
-            modelBuilder.Entity("MusicApplication.Models.ListenerList", b =>
-                {
-                    b.Navigation("ListenerListPodcasts");
+                    b.Navigation("SongContributers");
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Media", b =>
@@ -424,8 +349,6 @@ namespace MusicApplication.Migrations
                     b.Navigation("Cast");
 
                     b.Navigation("Episodes");
-
-                    b.Navigation("ListenerListPodcasts");
                 });
 #pragma warning restore 612, 618
         }

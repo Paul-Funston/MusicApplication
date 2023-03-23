@@ -25,7 +25,7 @@ namespace MusicApplication.Controllers
         {
             var musicApplicationContext = _context.Songs
                 .Include(s => s.Album)
-                .Include(s => s.SongContributers)
+                .Include(s => s.MediaContributers)
                 .ThenInclude(sc => sc.Artist);
 
 
