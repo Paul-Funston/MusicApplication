@@ -51,7 +51,7 @@ namespace MusicApplication.Models
         public Song(string title, int durationSeconds, Album album, int orderNumber) : base(title, durationSeconds, album.Id, orderNumber)
         {
             Album = album;
-            CollectionOrderNumber = orderNumber;
+            
         }
     }
 
@@ -59,13 +59,16 @@ namespace MusicApplication.Models
     {
         public virtual Podcast Podcast { get; set; }
 
-        
+        [Display(Name = "Release Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:D}")]
+        public DateTime ReleaseDate { get; set; }
         public Episode() : base() { }
 
-        public Episode(string title, int durationSeconds, Podcast podcast, int orderNumber) : base(title, durationSeconds, podcast.Id, orderNumber)
+        public Episode(string title, int durationSeconds, Podcast podcast, int orderNumber, DateTime releaseDate) : base(title, durationSeconds, podcast.Id, orderNumber)
         {
             Podcast = podcast;
-            CollectionOrderNumber = orderNumber;
+            ReleaseDate = releaseDate;
+            
         }
     }
 }

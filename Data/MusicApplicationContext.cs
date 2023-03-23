@@ -102,15 +102,94 @@ namespace MusicApplication.Data
 
         private void _modelCreateValidation(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Media>()
-                .ToTable(m => m.HasCheckConstraint("CK_Duration", "[DurationSeconds] > 0"))
-                .ToTable(m => m.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0"));
+            modelBuilder.Entity<Media>(entity =>
+            {
+                entity.HasIndex(e => new { e.MediaCollectionId, e.CollectionOrderNumber })
+                    .IsUnique();
 
-            modelBuilder.Entity<Media>()
-                .HasIndex(m => new { m.MediaCollectionId, m.CollectionOrderNumber })
-                .IsUnique();
+                entity.ToTable(e =>
+                    e.HasCheckConstraint("CK_Duration", 
+                    "[DurationSeconds] > 0 AND [DurationSeconds] < 86400"));
+                
+                entity.ToTable(e => 
+                    e.HasCheckConstraint("CK_CollectionOrderNumber", "[CollectionOrderNumber] > 0"));
 
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.CollectionOrderNumber)
+                    .IsRequired();
+
+                entity.Property(e => e.DurationSeconds)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Episode>(entity =>
+            {
+                entity.Property(e => e.ReleaseDate)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<MediaCollection>(entity =>
+            {
+                entity.Property(e => e.Title)
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<Artist>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
+
+
+            modelBuilder.Entity<Playlist>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
+
+            modelBuilder.Entity<ListenerList>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(100)
+                    .IsRequired();
+            });
+
+
+
+            
+            modelBuilder.Entity<MediaContributer>(entity =>
+            {
+                entity.HasIndex(e => new { e.MediaId, e.ArtistId })
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<PodcastContributer>(entity =>
+            {
+                entity.HasIndex(e => new { e.ArtistId, e.PodcastId})
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<PlaylistSong>(entity =>
+            {
+                entity.HasIndex(e => new { e.SongId, e.PlaylistId})
+                    .IsUnique();
+            });
+
+            
+
+            modelBuilder.Entity<ListenerListPodcast>(entity =>
+            {
+                entity.HasIndex(e => new { e.ListenerListId, e.PodcastId})
+                    .IsUnique();
+            });
         }
+
         public DbSet<MusicApplication.Models.Song> Songs { get; set; } = default!;
         public DbSet<Episode> Episodes { get; set; } = default!;
         public DbSet<MusicApplication.Models.Album> Albums { get; set; } = default!;
@@ -119,8 +198,10 @@ namespace MusicApplication.Data
         public DbSet<MusicApplication.Models.Playlist> Playlists{ get; set; } = default!;
         public DbSet<MusicApplication.Models.PlaylistSong> PlaylistSongs { get; set; } = default!;
         public DbSet<MusicApplication.Models.MediaContributer> MediaContributers { get; set; } = default!;
-
+        public DbSet<PodcastContributer> PodcastContributers { get; set; } = default!;
         public DbSet<ListenerList> ListenerLists { get; set; } = default!;
+        public DbSet<ListenerListPodcast> ListenerListPodcasts { get; set; } = default!;
+
 
     }
 }
