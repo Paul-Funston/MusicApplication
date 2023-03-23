@@ -64,7 +64,51 @@ namespace MusicApplication.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult AddToListenerList(int id)
+        {
+            Podcast? podcast = _context.Podcasts.FirstOrDefault(p => p.Id == id);
+            if (podcast == null) { return NotFound(); }
+            AddToListenerListVM vm = new AddToListenerListVM(_context.ListenerLists.Include(ll => ll.ListenerListPodcasts), id, podcast.Title);
+            return View(vm);
+        }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> AddToListenerList([Bind("PodcastId,ListenerListId,PodcastTitle")] AddToListenerListVM vm)
+        {
+            if (vm.ListenerListId != null && vm.PodcastId != null)
+            {
+                if (!_context.ListenerListPodcasts.Any(llp => llp.ListenerListId == vm.ListenerListId && llp.PodcastId == vm.PodcastId))
+                {
+
+                    ListenerListPodcast listenerListPodcast = new();
+
+                    ListenerList listenerList = _context.ListenerLists.First(ll => ll.Id == vm.ListenerListId);
+                    Podcast podcast = _context.Podcasts.First(p => p.Id == vm.PodcastId);
+
+                    listenerListPodcast.Podcast = podcast;
+                    listenerListPodcast.ListenerList= listenerList;
+
+                    _context.ListenerListPodcasts.Add(listenerListPodcast);
+
+                    _context.SaveChanges();
+                    vm.ViewMessage = $"Successfully added {podcast.Title} to the Listener List {listenerList.Name}";
+                }
+                else
+                {
+                    vm.ViewMessage = $"{vm.PodcastTitle} already included on selected Listener List";
+                }
+
+                vm.PopulateList(_context.ListenerLists);
+                return View(vm);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
+
     }
 }
